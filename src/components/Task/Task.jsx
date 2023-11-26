@@ -1,3 +1,5 @@
+/* eslint-disable react/self-closing-comp */
+
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -31,10 +33,13 @@ export default class Task extends React.Component {
   componentDidMount() {
     const { updateInterval, createdAt } = this.props;
     this.timerId = setInterval(() => {
-      this.setState({
-        created: formatDistanceToNow(new Date(createdAt), {
-          includeSeconds: true,
-        }),
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          created: formatDistanceToNow(new Date(createdAt), {
+            includeSeconds: true,
+          }),
+        };
       });
     }, updateInterval);
   }
@@ -64,7 +69,15 @@ export default class Task extends React.Component {
   };
 
   render() {
-    const { onDeleted, id, onComplited, complited, onEdit, editing } = this.props;
+    const {
+      onDeleted,
+      id,
+      onComplited,
+      complited,
+      onEdit,
+      editing,
+      timer: { min, sec },
+    } = this.props;
     const { text, created } = this.state;
 
     return (
@@ -83,6 +96,13 @@ export default class Task extends React.Component {
               }}
             >
               {text()}
+            </span>
+            <span className="timer">
+              <button className="icon icon-play" type="button"></button>
+              <button className="icon icon-pause" type="button"></button>
+              <time>
+                {min}:{sec}
+              </time>
             </span>
             <span id={id} className="created">
               Created {created} ago

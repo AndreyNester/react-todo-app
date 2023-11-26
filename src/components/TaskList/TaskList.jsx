@@ -15,6 +15,7 @@ function TaskList({ todoList, onDeleted, onComplited, onEdit, onEditTask }) {
             id={elem.id}
             createdAt={elem.createdAt}
             editing={elem.editing}
+            timer={elem.timer}
             onDeleted={onDeleted}
             onComplited={onComplited}
             onEdit={onEdit}

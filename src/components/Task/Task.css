@@ -156,3 +156,30 @@
 .todo-list li.editing:last-child {
   margin-bottom: -1px;
 }
+.todo-list li .icon-pause,
+.todo-list li .icon-play {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+.icon.icon-play,
+.icon.icon-pause {
+  position: static !important;
+}
+.todo-list li label .timer {
+  position: relative;
+  font-size: 13px;
+  color: gray;
+  width: 120px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+.icon-pause:after {
+  content: '⏸';
+}
+.icon-play:after {
+  content: '▶';
+}
