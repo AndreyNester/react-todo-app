@@ -52,7 +52,7 @@ export default class App extends React.Component {
     });
   };
 
-  addItem = (text) => {
+  addItem = (text, min, sec) => {
     const createTime = new Date();
 
     this.todoList = [
@@ -65,6 +65,10 @@ export default class App extends React.Component {
           createTime.getMonth() + 1
         }.${createTime.getDate()}.${createTime.getFullYear()} ${createTime.getHours()}:${createTime.getMinutes()}:${createTime.getSeconds()}`,
         editing: false,
+        timer: {
+          sec,
+          min,
+        },
       },
     ];
 
