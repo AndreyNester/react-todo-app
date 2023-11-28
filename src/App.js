@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from 'date-fns';
+import { format, formatDistanceToNow } from 'date-fns';
 import React from 'react';
 
 import './App.css';
@@ -66,13 +66,91 @@ export default class App extends React.Component {
         }.${createTime.getDate()}.${createTime.getFullYear()} ${createTime.getHours()}:${createTime.getMinutes()}:${createTime.getSeconds()}`,
         editing: false,
         timer: {
-          sec,
-          min,
+          sec: Number(sec),
+          min: Number(min),
+          createdAt: new Date().getTime(),
+          finishAt: new Date().getTime() + Number(sec) * 1000 + Number(min) * 60 * 1000,
+          currentAt: new Date().getTime(),
+          difference: format(new Date(Number(sec) * 1000 + Number(min) * 60 * 1000), 'mm:ss'),
+          differenceMs: new Date(Number(sec) * 1000 + Number(min) * 60 * 1000),
+          finished: false,
         },
       },
     ];
     this.setState({
       todoList: this.todoList,
+    });
+  };
+
+  onTick = (id) => {
+    const idxD = this.todoList.findIndex((el) => el.id === id);
+    this.todoList[idxD] = {
+      ...this.todoList[idxD],
+      timer: {
+        ...this.todoList[idxD].timer,
+        currentAt: new Date().getTime(),
+        finished: new Date().getTime() >= this.todoList[idxD].timer.finishAt,
+        difference: format(new Date(this.todoList[idxD].timer.finishAt - new Date().getTime()), 'mm:ss'),
+        differenceMs: new Date(this.todoList[idxD].timer.finishAt - new Date().getTime()).getTime(),
+        stopped: false,
+      },
+    };
+
+    this.setState(({ todoList }) => {
+      const idx = todoList.findIndex((el) => el.id === id);
+      const newArr = [...todoList];
+      newArr[idx] = {
+        ...this.todoList[idxD],
+      };
+
+      return {
+        todoList: newArr,
+      };
+    });
+  };
+
+  onPause = (id) => {
+    const idxD = this.todoList.findIndex((el) => el.id === id);
+    this.todoList[idxD] = {
+      ...this.todoList[idxD],
+      timer: {
+        ...this.todoList[idxD].timer,
+        stopped: true,
+      },
+    };
+    this.setState(({ todoList }) => {
+      const idx = todoList.findIndex((el) => el.id === id);
+      const newArr = [...todoList];
+      newArr[idx] = {
+        ...this.todoList[idxD],
+      };
+
+      return {
+        todoList: newArr,
+      };
+    });
+  };
+
+  onPlay = (id) => {
+    const idxD = this.todoList.findIndex((el) => el.id === id);
+    this.todoList[idxD] = {
+      ...this.todoList[idxD],
+      timer: {
+        ...this.todoList[idxD].timer,
+        finishAt: new Date().getTime() + this.todoList[idxD].timer.differenceMs,
+        stopped: false,
+      },
+    };
+    this.setState(({ todoList }) => {
+      const idx = todoList.findIndex((el) => el.id === id);
+      const newArr = [...todoList];
+      newArr[idx] = {
+        ...this.todoList[idxD],
+      };
+
+      return {
+        todoList: newArr,
+      };
     });
   };
 
@@ -173,6 +251,7 @@ export default class App extends React.Component {
 
   render() {
     const { todoList } = this.state;
+    // console.log(format(new Date().getTime() + 10000, 'mm:ss'));
 
     return (
       <section className="todoapp">
@@ -189,6 +268,9 @@ export default class App extends React.Component {
             onComplited={this.onComplited}
             onEdit={this.onEdit}
             onEditTask={this.onEditTask}
+            onTick={this.onTick}
+            onPause={this.onPause}
+            onPlay={this.onPlay}
           />
 
           <Footer

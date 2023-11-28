@@ -31,7 +31,7 @@ export default class Task extends React.Component {
   };
 
   componentDidMount() {
-    const { updateInterval, createdAt } = this.props;
+    const { updateInterval, createdAt, onTick, id } = this.props;
     this.timerId = setInterval(() => {
       this.setState((prevState) => {
         return {
@@ -42,10 +42,15 @@ export default class Task extends React.Component {
         };
       });
     }, updateInterval);
+
+    this.timerId2 = setInterval(() => {
+      onTick(id);
+    }, 1000);
   }
 
   componentWillUnmount() {
     clearInterval(this.timerId);
+    clearInterval(this.timerId2);
   }
 
   onTextChanged = (e) => {
@@ -68,17 +73,25 @@ export default class Task extends React.Component {
     }
   };
 
+  onPause = (id) => {
+    const { onPause } = this.props;
+    clearInterval(this.timerId2);
+    onPause(id);
+  };
+
+  onPlay = (id) => {
+    const { onTick, onPlay } = this.props;
+    onPlay(id);
+    this.timerId2 = setInterval(() => {
+      onTick(id);
+    }, 1000);
+  };
+
   render() {
-    const {
-      onDeleted,
-      id,
-      onComplited,
-      complited,
-      onEdit,
-      editing,
-      timer: { min, sec },
-    } = this.props;
+    const { onDeleted, id, onComplited, complited, onEdit, editing, timerDifference, timerStopped } = this.props;
     const { text, created } = this.state;
+
+    console.log(timerStopped);
 
     return (
       // eslint-disable-next-line no-nested-ternary
@@ -98,11 +111,21 @@ export default class Task extends React.Component {
               {text()}
             </span>
             <span className="timer">
-              <button className="icon icon-play" type="button"></button>
-              <button className="icon icon-pause" type="button"></button>
-              <time>
-                {min}:{sec}
-              </time>
+              <button
+                className={timerStopped ? 'icon icon-play' : 'hidden'}
+                type="button"
+                onClick={() => {
+                  this.onPlay(id);
+                }}
+              ></button>
+              <button
+                className={timerStopped ? 'hidden' : 'icon icon-pause'}
+                type="button"
+                onClick={() => {
+                  this.onPause(id);
+                }}
+              ></button>
+              <time>{timerDifference}</time>
             </span>
             <span id={id} className="created">
               Created {created} ago
