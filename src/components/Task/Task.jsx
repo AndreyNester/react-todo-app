@@ -91,8 +91,6 @@ export default class Task extends React.Component {
     const { onDeleted, id, onComplited, complited, onEdit, editing, timerDifference, timerStopped } = this.props;
     const { text, created } = this.state;
 
-    console.log(timerStopped);
-
     return (
       // eslint-disable-next-line no-nested-ternary
       <li className={editing ? 'editing' : complited ? 'completed' : null}>
