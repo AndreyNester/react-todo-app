@@ -31,21 +31,23 @@ export default class Task extends React.Component {
   };
 
   componentDidMount() {
-    const { updateInterval, createdAt, onTick, id } = this.props;
-    this.timerId = setInterval(() => {
-      this.setState((prevState) => {
-        return {
-          ...prevState,
-          created: formatDistanceToNow(new Date(createdAt), {
-            includeSeconds: true,
-          }),
-        };
-      });
-    }, updateInterval);
+    const { updateInterval, createdAt, onTick, id, timerStopped } = this.props;
+    if (!timerStopped) {
+      this.timerId = setInterval(() => {
+        this.setState((prevState) => {
+          return {
+            ...prevState,
+            created: formatDistanceToNow(new Date(createdAt), {
+              includeSeconds: true,
+            }),
+          };
+        });
+      }, updateInterval);
 
-    this.timerId2 = setInterval(() => {
-      onTick(id);
-    }, 1000);
+      this.timerId2 = setInterval(() => {
+        onTick(id);
+      }, 1000);
+    }
   }
 
   componentWillUnmount() {

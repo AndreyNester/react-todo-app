@@ -19,7 +19,7 @@ export default class NewTaskForm extends React.Component {
   };
 
   onMinChanged = (e) => {
-    if (e.target.value >= 0) {
+    if (e.target.value >= 0 && e.target.value <= 60) {
       this.setState((prevState) => {
         return {
           ...prevState,
@@ -30,7 +30,7 @@ export default class NewTaskForm extends React.Component {
   };
 
   onSecChanged = (e) => {
-    if (e.target.value >= 0) {
+    if (e.target.value >= 0 && e.target.value <= 60) {
       this.setState((prevState) => {
         return {
           ...prevState,

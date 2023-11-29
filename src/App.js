@@ -74,6 +74,7 @@ export default class App extends React.Component {
           difference: format(new Date(Number(sec) * 1000 + Number(min) * 60 * 1000), 'mm:ss'),
           differenceMs: new Date(Number(sec) * 1000 + Number(min) * 60 * 1000),
           finished: false,
+          stopped: false,
         },
       },
     ];
@@ -92,7 +93,6 @@ export default class App extends React.Component {
         finished: new Date().getTime() >= this.todoList[idxD].timer.finishAt,
         difference: format(new Date(this.todoList[idxD].timer.finishAt - new Date().getTime()), 'mm:ss'),
         differenceMs: new Date(this.todoList[idxD].timer.finishAt - new Date().getTime()).getTime(),
-        stopped: false,
       },
     };
 
