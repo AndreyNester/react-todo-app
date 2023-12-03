@@ -1,3 +1,5 @@
+import './TaskFilter.css';
+
 function TaskFilter() {
   return (
     <ul className="filters">

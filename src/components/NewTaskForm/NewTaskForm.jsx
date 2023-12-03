@@ -1,3 +1,5 @@
+import './NewTaskForm.css';
+
 function NewTaskForm() {
   return (
     <>

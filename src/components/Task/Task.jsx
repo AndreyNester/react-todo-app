@@ -1,9 +1,12 @@
-function Task() {
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import './Task.css';
+
+function Task({ id }) {
   return (
-    <li>
+    <li className="">
       <div className="view">
-        <label htmlFor="some">
-          <input type="checkbox" className="toggle" />
+        <input id={id} type="checkbox" className="toggle" />
+        <label htmlFor={id}>
           <span className="description">Active task</span>
           <span className="created">created 5 minutes ago</span>
         </label>
