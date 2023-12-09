@@ -53,3 +53,10 @@ export const onFilterActive = (value) => {
     payload: value,
   };
 };
+
+export const onPlay = (value) => {
+  return {
+    type: 'ONPLAY',
+    payload: value,
+  };
+};

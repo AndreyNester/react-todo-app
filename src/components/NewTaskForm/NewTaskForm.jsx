@@ -22,8 +22,8 @@ function NewTaskForm() {
 
   const { dispatchData } = useContext(dataContext);
 
-  const onSubmit = (value) => {
-    dispatchData(onAdd({ title: value, min: inputMin, sec: inputSec }));
+  const onSubmit = (value, valueMin, valueSec) => {
+    dispatchData(onAdd({ title: value, min: valueMin, sec: valueSec }));
     setInputValue('');
     setInputMin('');
     setInputSec('');

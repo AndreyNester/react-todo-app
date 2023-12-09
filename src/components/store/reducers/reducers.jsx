@@ -6,6 +6,7 @@ import edit from './reducer.fncs/edit';
 import filterActive from './reducer.fncs/filterActive';
 import filterAll from './reducer.fncs/filterAll';
 import filterCompleted from './reducer.fncs/filterCompleted';
+import onPlay from './reducer.fncs/onPlay';
 
 const appReducer = (prevState, action) => {
   switch (action.type) {
@@ -32,6 +33,9 @@ const appReducer = (prevState, action) => {
 
     case 'FILTER_COMPLETED':
       return filterCompleted(prevState);
+
+    case 'ONPLAY':
+      return onPlay(prevState, action);
 
     default:
       break;

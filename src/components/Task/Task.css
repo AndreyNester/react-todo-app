@@ -188,7 +188,7 @@
 /* ==== */
 
 .cdTimer {
-  width: 150px;
+  width: 75px;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -228,4 +228,12 @@
 
 .icon-play:after {
   content: '▶';
+}
+
+.cdTimer__button.disable {
+  opacity: 0.2;
+}
+
+.cdTimer__button.disable:hover {
+  cursor: not-allowed;
 }
