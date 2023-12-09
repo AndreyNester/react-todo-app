@@ -1,12 +1,15 @@
 import Task from '../Task/Task';
 import './TaskList.css';
 
-function TaskList() {
+function TaskList(props) {
+  const { visList } = props;
+  console.log(visList);
+
   return (
     <ul className="todo-list">
-      <Task id={1} />
-      <Task id={2} />
-      <Task id={3} />
+      {visList.map((el) => (
+        <Task item={el} key={el.id} />
+      ))}
     </ul>
   );
 }
