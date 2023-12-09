@@ -47,6 +47,15 @@ function Task(props) {
         />
         <label htmlFor={id}>
           <span className="description">{title}</span>
+          <div className="cdTimer">
+            <button className="cdTimer__button icon icon-play" type="button">
+              {' '}
+            </button>
+            <button className="cdTimer__button icon icon-pause" type="button">
+              {' '}
+            </button>
+            <time className="cdTimer__time">00:00</time>
+          </div>
           <span className="created">created {createTime}</span>
         </label>
         <button type="button" className="icon icon-edit" onClick={() => setEditing((prevState) => !prevState)}>

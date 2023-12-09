@@ -1,127 +1,37 @@
+import add from './reducer.fncs/add';
+import clearCompleted from './reducer.fncs/clearCompleted';
+import complete from './reducer.fncs/complete';
+import deleted from './reducer.fncs/deleted';
+import edit from './reducer.fncs/edit';
+import filterActive from './reducer.fncs/filterActive';
+import filterAll from './reducer.fncs/filterAll';
+import filterCompleted from './reducer.fncs/filterCompleted';
+
 const appReducer = (prevState, action) => {
   switch (action.type) {
-    case 'ADD': {
-      const id = prevState.globList.length ? Math.max(...prevState.globList.map((el) => el.id)) + 1 : 0;
-      const createdAt = new Date().getTime();
-      return {
-        ...prevState,
-        globList: [
-          ...prevState.globList,
-          {
-            title: action.payload.title,
-            id,
-            completed: false,
-            timer: {
-              createdAt,
-            },
-          },
-        ],
-        visList: [
-          ...prevState.visList,
-          {
-            title: action.payload.title,
-            id,
-            completed: false,
-            timer: {
-              createdAt,
-            },
-          },
-        ],
-      };
-    }
+    case 'ADD':
+      return add(prevState, action);
 
-    case 'COMPLETE': {
-      const idxG = prevState.globList.findIndex((el) => action.payload.id === el.id);
-      const idxV = prevState.visList.findIndex((el) => action.payload.id === el.id);
+    case 'COMPLETE':
+      return complete(prevState, action);
 
-      const newArrG = [...prevState.globList];
-      const newArrV = [...prevState.visList];
+    case 'DELETE':
+      return deleted(prevState, action);
 
-      newArrG[idxG] = {
-        ...prevState.globList[idxG],
-        completed: !prevState.globList[idxG].completed,
-      };
+    case 'EDIT':
+      return edit(prevState, action);
 
-      newArrV[idxV] = {
-        ...prevState.visList[idxV],
-        completed: !prevState.visList[idxV].completed,
-      };
+    case 'CLEAR_COMPLETED':
+      return clearCompleted(prevState);
 
-      return {
-        ...prevState,
-        globList: newArrG,
-        visList: newArrV,
-      };
-    }
+    case 'FILTER_ALL':
+      return filterAll(prevState);
 
-    case 'DELETE': {
-      const newArrG = prevState.globList.filter((el) => el.id !== action.payload.id);
-      const newArrV = prevState.visList.filter((el) => el.id !== action.payload.id);
-      return {
-        ...prevState,
-        globList: newArrG,
-        visList: newArrV,
-      };
-    }
+    case 'FILTER_ACTIVE':
+      return filterActive(prevState);
 
-    case 'EDIT': {
-      const idxG = prevState.globList.findIndex((el) => action.payload.id === el.id);
-      const idxV = prevState.visList.findIndex((el) => action.payload.id === el.id);
-
-      const newArrG = [...prevState.globList];
-      const newArrV = [...prevState.visList];
-
-      newArrG[idxG] = {
-        ...prevState.globList[idxG],
-        title: action.payload.title,
-      };
-
-      newArrV[idxV] = {
-        ...prevState.visList[idxV],
-        title: action.payload.title,
-      };
-
-      return {
-        ...prevState,
-        globList: newArrG,
-        visList: newArrV,
-      };
-    }
-
-    case 'CLEAR_ACTIVE': {
-      const newArrG = prevState.globList.filter((el) => !el.completed);
-      const newArrV = prevState.visList.filter((el) => !el.completed);
-
-      return {
-        ...prevState,
-        globList: newArrG,
-        visList: newArrV,
-      };
-    }
-
-    case 'FILTER_ALL': {
-      const newArrV = [...prevState.globList];
-      return {
-        ...prevState,
-        visList: newArrV,
-      };
-    }
-
-    case 'FILTER_ACTIVE': {
-      const newArrV = prevState.globList.filter((el) => !el.completed);
-      return {
-        ...prevState,
-        visList: newArrV,
-      };
-    }
-
-    case 'FILTER_COMPLETED': {
-      const newArrV = prevState.globList.filter((el) => el.completed);
-      return {
-        ...prevState,
-        visList: newArrV,
-      };
-    }
+    case 'FILTER_COMPLETED':
+      return filterCompleted(prevState);
 
     default:
       break;

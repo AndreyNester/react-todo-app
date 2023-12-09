@@ -6,28 +6,48 @@ import { dataContext } from '../../App';
 // eslint-disable-next-line import/order
 import { onAdd } from '../store/actions/actions';
 import './NewTaskForm.css';
+import inputs from './inputs';
 import isValid from './utils';
 
 function NewTaskForm() {
   const [inputValue, setInputValue] = useState('');
+  const [inputMin, setInputMin] = useState('');
+  const [inputSec, setInputSec] = useState('');
+
+  const statesArr = [
+    [inputValue, setInputValue],
+    [inputMin, setInputMin],
+    [inputSec, setInputSec],
+  ];
 
   const { dispatchData } = useContext(dataContext);
 
   const onSubmit = (value) => {
-    dispatchData(onAdd({ title: value }));
+    dispatchData(onAdd({ title: value, min: inputMin, sec: inputSec }));
     setInputValue('');
+    setInputMin('');
+    setInputSec('');
   };
 
   return (
-    <form action="" onSubmit={(e) => (isValid(e, inputValue) ? onSubmit(inputValue) : null)}>
+    <form className="new-todo-form" action="">
       <h1>todos</h1>
-      <input
-        type="text"
-        className="new-todo"
-        placeholder="What needs to be done?"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-      />
+
+      {inputs.map((el, index) => (
+        <input
+          key={el.id}
+          className={el.className}
+          type={el.type}
+          placeholder={el.placeholder}
+          value={statesArr[index][0]}
+          onChange={(e) => statesArr[index][1](e.target.value)}
+          onKeyUp={(e) =>
+            e.code === 'Enter'
+              ? isValid(inputValue, inputMin, inputSec) && onSubmit(inputValue, inputMin, inputSec)
+              : null
+          }
+        />
+      ))}
     </form>
   );
 }

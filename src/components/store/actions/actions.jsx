@@ -28,7 +28,7 @@ export const onEdit = (value) => {
 
 export const onClearActive = (value) => {
   return {
-    type: 'CLEAR_ACTIVE',
+    type: 'CLEAR_COMPLETED',
     payload: value,
   };
 };

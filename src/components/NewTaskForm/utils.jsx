@@ -1,6 +1,3 @@
-const isValid = (e, value) => {
-  e.preventDefault();
-  return Boolean(value);
-};
+const isValid = (value, valueMin, valueSec) => Boolean(value && valueMin && valueSec);
 
 export default isValid;
