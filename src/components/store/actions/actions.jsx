@@ -60,3 +60,10 @@ export const onPlay = (value) => {
     payload: value,
   };
 };
+
+export const onPause = (value) => {
+  return {
+    type: 'ONPAUSE',
+    payload: value,
+  };
+};

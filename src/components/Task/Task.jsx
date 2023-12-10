@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import { dataContext } from '../../App';
 // eslint-disable-next-line import/order
-import { onComplete, onDelete, onEdit, onPlay } from '../store/actions/actions';
+import { onComplete, onDelete, onEdit, onPause, onPlay } from '../store/actions/actions';
 import './Task.css';
 import { cDTimerFormater, timeFormater } from './utils';
 
@@ -14,15 +14,15 @@ function Task(props) {
       id,
       title,
       completed,
-      timer: { createdAt, started, finishAt },
+      timer: { createdAt, started, difference },
     },
   } = props;
 
   const [editing, setEditing] = useState(false);
   const [editingValue, setEditingValue] = useState(title);
   const [createTime, setCreateTime] = useState(timeFormater(createdAt));
-  const [CDTimer, setCDTimer] = useState(cDTimerFormater(finishAt));
-  console.log(setCDTimer);
+  // eslint-disable-next-line no-unused-vars
+  const [CDTimer, setCDTimer] = useState(difference);
 
   useEffect(() => {
     setEditingValue(title);
@@ -38,8 +38,16 @@ function Task(props) {
   }, []);
 
   useEffect(() => {
-    if (completed && started) dispatchData(onPlay({ id }));
+    if (completed && started) dispatchData(onPause({ id, CDTimer }));
   }, [completed]);
+
+  useEffect(() => {
+    if (started) {
+      const cdIntervalId = setInterval(() => setCDTimer((prevCDTimer) => prevCDTimer - 1000), 1000);
+      return () => clearInterval(cdIntervalId);
+    }
+    return undefined;
+  }, [started]);
 
   return (
     <li className={`${completed ? 'completed' : ''} ${editing ? 'editing' : ''}`}>
@@ -64,11 +72,11 @@ function Task(props) {
             <button
               className={`cdTimer__button icon icon-pause ${!started && 'hidden'}`}
               type="button"
-              onClick={() => (!completed ? dispatchData(onPlay({ id })) : null)}
+              onClick={() => (!completed ? dispatchData(onPause({ id, CDTimer })) : null)}
             >
               {' '}
             </button>
-            <time className="cdTimer__time">{CDTimer}</time>
+            <time className="cdTimer__time">{cDTimerFormater(CDTimer)}</time>
           </div>
           <span className="created">created {createTime}</span>
         </label>

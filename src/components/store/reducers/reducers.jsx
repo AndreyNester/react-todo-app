@@ -6,6 +6,7 @@ import edit from './reducer.fncs/edit';
 import filterActive from './reducer.fncs/filterActive';
 import filterAll from './reducer.fncs/filterAll';
 import filterCompleted from './reducer.fncs/filterCompleted';
+import onPause from './reducer.fncs/onPause';
 import onPlay from './reducer.fncs/onPlay';
 
 const appReducer = (prevState, action) => {
@@ -36,6 +37,9 @@ const appReducer = (prevState, action) => {
 
     case 'ONPLAY':
       return onPlay(prevState, action);
+
+    case 'ONPAUSE':
+      return onPause(prevState, action);
 
     default:
       break;
