@@ -14,13 +14,13 @@ function NewTaskForm() {
   const [inputMin, setInputMin] = useState('');
   const [inputSec, setInputSec] = useState('');
 
+  const { dispatchData } = useContext(dataContext);
+
   const statesArr = [
     [inputValue, setInputValue],
     [inputMin, setInputMin],
     [inputSec, setInputSec],
   ];
-
-  const { dispatchData } = useContext(dataContext);
 
   const onSubmit = (value, valueMin, valueSec) => {
     dispatchData(onAdd({ title: value, min: valueMin, sec: valueSec }));

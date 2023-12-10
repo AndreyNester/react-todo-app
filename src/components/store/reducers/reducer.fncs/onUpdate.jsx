@@ -5,22 +5,26 @@ function onUpdate(prevState, action) {
   const newArrG = [...prevState.globList];
   const newArrV = [...prevState.visList];
 
-  const newDifferenceG = prevState.globList[idxG].timer.finishAt - new Date().getTime();
-  const newDifferenceV = prevState.visList[idxV].timer.finishAt - new Date().getTime();
+  const currentDifference = action.payload.CDTimer;
+
+  const presentTime = new Date().getTime();
 
   newArrG[idxG] = {
     ...prevState.globList[idxG],
     timer: {
       ...prevState.globList[idxG].timer,
-      difference: newDifferenceG,
+      unmountedAt: presentTime,
+      difference: currentDifference,
     },
   };
+  console.log(prevState);
 
   newArrV[idxV] = {
     ...prevState.visList[idxV],
     timer: {
       ...prevState.visList[idxV].timer,
-      difference: newDifferenceV,
+      unmountedAt: presentTime,
+      difference: currentDifference,
     },
   };
 

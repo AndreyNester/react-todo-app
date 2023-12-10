@@ -3,7 +3,6 @@ import './TaskList.css';
 
 function TaskList(props) {
   const { visList } = props;
-  console.log(visList);
 
   return (
     <ul className="todo-list">

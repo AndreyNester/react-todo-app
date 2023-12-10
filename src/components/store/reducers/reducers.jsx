@@ -8,6 +8,7 @@ import filterAll from './reducer.fncs/filterAll';
 import filterCompleted from './reducer.fncs/filterCompleted';
 import onPause from './reducer.fncs/onPause';
 import onPlay from './reducer.fncs/onPlay';
+import onUpdate from './reducer.fncs/onUpdate';
 
 const appReducer = (prevState, action) => {
   switch (action.type) {
@@ -40,6 +41,9 @@ const appReducer = (prevState, action) => {
 
     case 'ONPAUSE':
       return onPause(prevState, action);
+
+    case 'ONUPDATE':
+      return onUpdate(prevState, action);
 
     default:
       break;

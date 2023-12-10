@@ -10,6 +10,7 @@ function onPlay(prevState, action) {
     timer: {
       ...prevState.globList[idxG].timer,
       started: true,
+      unmountedAt: new Date().getTime(),
     },
   };
 
@@ -18,6 +19,7 @@ function onPlay(prevState, action) {
     timer: {
       ...prevState.visList[idxV].timer,
       started: true,
+      unmountedAt: new Date().getTime(),
     },
   };
 

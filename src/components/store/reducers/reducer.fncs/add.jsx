@@ -2,6 +2,8 @@ function add(prevState, action) {
   const id = prevState.globList.length ? Math.max(...prevState.globList.map((el) => el.id)) + 1 : 0;
   const createdAt = new Date().getTime();
 
+  const presentTime = new Date().getTime();
+
   const finishAt = Number(new Date().getTime() + action.payload.min * 60 * 1000 + action.payload.sec * 1000);
   const difference = finishAt - new Date().getTime();
 
@@ -18,6 +20,7 @@ function add(prevState, action) {
           finishAt,
           difference,
           started: false,
+          unmountedAt: presentTime,
         },
       },
     ],
@@ -32,6 +35,7 @@ function add(prevState, action) {
           finishAt,
           difference,
           started: false,
+          unmountedAt: presentTime,
         },
       },
     ],

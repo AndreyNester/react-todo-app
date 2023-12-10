@@ -67,3 +67,10 @@ export const onPause = (value) => {
     payload: value,
   };
 };
+
+export const onUpdate = (value) => {
+  return {
+    type: 'ONUPDATE',
+    payload: value,
+  };
+};
