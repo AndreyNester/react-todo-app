@@ -15,6 +15,7 @@ function TaskFilter() {
   };
 
   const { dispatchData } = useContext(dataContext);
+
   return (
     <ul className="filters">
       {filtersList.map((el, index) => (

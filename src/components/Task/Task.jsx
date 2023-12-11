@@ -1,11 +1,13 @@
 /* eslint-disable import/no-cycle */
+import classNames from 'classnames';
 import { useContext, useEffect, useState } from 'react';
 
 import { dataContext } from '../../App';
 import EditingInput from '../EditingInput/EditingInput';
 import TaskMainContent from '../TaskMainContent/TaskMainContent';
 // eslint-disable-next-line import/order
-import { onComplete, onDelete, onPause } from '../store/actions/actions';
+import { onComplete, onDelete, onPause, updateList } from '../store/actions/actions';
+// eslint-disable-next-line import/order
 import './Task.css';
 import { cDTimerFormater, timeFormater } from './utils';
 
@@ -38,11 +40,13 @@ function Task(props) {
 
   useEffect(() => {
     const interval = setInterval(() => setCreateTime(timeFormater(createdAt)), 2000);
+
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
     if (completed && started) dispatchData(onPause({ id, CDTimer }));
+    dispatchData(updateList({ id }));
   }, [completed]);
 
   useEffect(() => {
@@ -59,8 +63,13 @@ function Task(props) {
 
   // == finish useEffect's block ==
 
+  const liClassName = {
+    completed,
+    editing,
+  };
+
   return (
-    <li className={`${completed ? 'completed' : ''} ${editing ? 'editing' : ''}`}>
+    <li className={classNames(liClassName)}>
       <div className="view">
         <input
           id={id}

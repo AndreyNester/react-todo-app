@@ -74,3 +74,10 @@ export const onUpdate = (value) => {
     payload: value,
   };
 };
+
+export const updateList = (value) => {
+  return {
+    type: 'UPDATELIST',
+    payload: value,
+  };
+};
