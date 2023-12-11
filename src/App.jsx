@@ -11,6 +11,7 @@ export const dataContext = createContext();
 
 function App() {
   const initialState = {
+    filter: 'all',
     visList: [],
     globList: [],
   };
